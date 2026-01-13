@@ -1,0 +1,23 @@
+# Core dependencies
+requests>=2.31.0
+python-dotenv>=1.0.0
+PyPDF2>=3.0.1
+selenium>=4.15.0
+webdriver-manager>=4.0.1
+
+# File handling
+pathlib>=1.0.1
+python-dateutil>=2.8.2
+
+# Data processing
+pandas>=2.1.0
+
+# Logging
+colorlog>=6.7.0
+
+# AppFolio API (REST client)
+httpx>=0.25.0
+
+# Utilities
+tenacity>=8.2.3  # For retries
+tqdm>=4.66.1  # Progress bars

@@ -1,0 +1,71 @@
+{
+  "buildings": {
+    "building_1": {
+      "name": "Main Street Apartments",
+      "address": "123 Main St",
+      "utilities": [
+        {
+          "provider": "electric_company",
+          "account_number": "ACCOUNT_123",
+          "login_url": "https://www.electriccompany.com/login"
+        },
+        {
+          "provider": "gas_company",
+          "account_number": "GAS_456",
+          "login_url": "https://www.gascompany.com/login"
+        },
+        {
+          "provider": "water_company",
+          "account_number": "WATER_789",
+          "login_url": "https://www.watercompany.com/login"
+        }
+      ]
+    },
+    "building_2": {
+      "name": "Oak Avenue Complex",
+      "address": "456 Oak Ave",
+      "utilities": [
+        {
+          "provider": "electric_company",
+          "account_number": "ACCOUNT_321",
+          "login_url": "https://www.electriccompany.com/login"
+        }
+      ]
+    }
+  },
+  "providers": {
+    "electric_company": {
+      "name": "Electric Company",
+      "type": "selenium",
+      "selectors": {
+        "username_field": "#username",
+        "password_field": "#password",
+        "login_button": "#login-btn",
+        "bills_link": "a[href*='bills']",
+        "download_button": ".download-pdf"
+      }
+    },
+    "gas_company": {
+      "name": "Gas Company",
+      "type": "selenium",
+      "selectors": {
+        "username_field": "input[name='user']",
+        "password_field": "input[name='pass']",
+        "login_button": "button[type='submit']",
+        "bills_link": "#billing-history",
+        "download_button": ".pdf-download"
+      }
+    },
+    "water_company": {
+      "name": "Water Company",
+      "type": "selenium",
+      "selectors": {
+        "username_field": "#email",
+        "password_field": "#pwd",
+        "login_button": "button.login",
+        "bills_link": "a.bills",
+        "download_button": "a.download"
+      }
+    }
+  }
+}
