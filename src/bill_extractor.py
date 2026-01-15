@@ -58,11 +58,43 @@ class BillExtractor:
 
         return driver
 
+    def _manual_login(self, login_url: str) -> bool:
+        """Open browser and wait for user to manually log in"""
+        try:
+            logger.info(f"Opening browser to {login_url}")
+            self.driver.get(login_url)
+
+            logger.info("="*60)
+            logger.info("🔐 MANUAL LOGIN REQUIRED")
+            logger.info("="*60)
+            logger.info("1. The browser window is now open")
+            logger.info("2. Please log into LADWP manually")
+            logger.info("3. Solve the CAPTCHA")
+            logger.info("4. Complete the login")
+            logger.info("5. Once you're logged in and see your account dashboard,")
+            logger.info("   press ENTER in this terminal to continue...")
+            logger.info("="*60)
+
+            # Wait for user to press Enter
+            input("Press ENTER after you've logged in: ")
+
+            logger.info("✅ Continuing with bill download...")
+            return True
+
+        except Exception as e:
+            logger.error(f"Manual login failed: {str(e)}")
+            raise
+
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-    def _login(self, provider_config: Dict[str, Any], credentials: Dict[str, str]) -> bool:
+    def _login(self, provider_config: Dict[str, Any], credentials: Dict[str, str], manual_mode: bool = False) -> bool:
         """Log in to utility provider website"""
         try:
             login_url = provider_config.get("login_url")
+
+            # Use manual login for LADWP or if manual_mode is True
+            if manual_mode or provider_config.get("provider") == "ladwp":
+                return self._manual_login(login_url)
+
             selectors = provider_config.get("selectors", {})
 
             logger.info(f"Logging in to {login_url}")
