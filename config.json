@@ -20,7 +20,7 @@
       "selectors": {
         "username_field": "input[name='userid']",
         "password_field": "input[name='password']",
-        "login_button": "#loginButton",
+        "login_button": ".login-btn",
         "bills_link": "a[href*='bill']",
         "download_button": ".download-pdf"
       }
