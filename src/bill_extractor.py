@@ -84,6 +84,8 @@ class BillExtractor:
             input("Press ENTER after you've logged in: ")
 
             logger.info("✅ Continuing with bill download...")
+            logger.info("Waiting for page to fully load...")
+            time.sleep(5)  # Give page time to fully load
             return True
 
         except Exception as e:
@@ -135,16 +137,28 @@ class BillExtractor:
     def _navigate_to_bills(self, selectors: Dict[str, str]) -> bool:
         """Navigate to bills/billing history page"""
         try:
-            wait = WebDriverWait(self.driver, 10)
+            # Check if we're already on the bills page
+            try:
+                download_buttons = self.driver.find_elements(By.CSS_SELECTOR, selectors["download_button"])
+                if len(download_buttons) > 0:
+                    logger.info("Already on bills page, skipping navigation")
+                    return True
+            except:
+                pass
+
+            # Try to find and click the bills link
+            wait = WebDriverWait(self.driver, 20)
             bills_link = wait.until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, selectors["bills_link"]))
             )
+            logger.info("Clicking bills link...")
             bills_link.click()
-            time.sleep(2)
+            time.sleep(3)
             return True
         except Exception as e:
             logger.error(f"Failed to navigate to bills: {str(e)}")
-            return False
+            logger.info("Attempting to proceed anyway - you may already be on the bills page")
+            return True  # Continue anyway, might already be on bills page
 
     def _get_current_billing_period_dates(self) -> List[datetime]:
         """Get list of dates for current billing periods"""
