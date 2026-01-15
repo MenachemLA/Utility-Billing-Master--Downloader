@@ -8,7 +8,7 @@
         {
           "provider": "ladwp",
           "account_number": "8055461000",
-          "login_url": "https://www.ladwp.com/ladwp/faces/ladwp/myaccount/login"
+          "login_url": "https://myaccount.ladwp.com/oamsso/login.html"
         }
       ]
     }
