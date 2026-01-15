@@ -176,10 +176,27 @@ class BillExtractor:
         downloaded_files = []
 
         try:
-            # Find all download buttons/links
+            # Debug: Show current page info
+            logger.info(f"Current URL: {self.driver.current_url}")
+            logger.info(f"Page title: {self.driver.title}")
+
+            # Try to find download buttons
+            logger.info(f"Looking for download buttons with selector: {selectors['download_button']}")
             download_elements = self.driver.find_elements(By.CSS_SELECTOR, selectors["download_button"])
 
             logger.info(f"Found {len(download_elements)} potential bills to download")
+
+            # Debug: Try alternative selectors if none found
+            if len(download_elements) == 0:
+                logger.info("No download buttons found. Trying alternative selectors...")
+                alt_selectors = ["a.af_commandImageLink", "a[id*='gil']", "img[src*='pdf']"]
+                for alt_sel in alt_selectors:
+                    alt_elements = self.driver.find_elements(By.CSS_SELECTOR, alt_sel)
+                    logger.info(f"  Selector '{alt_sel}': found {len(alt_elements)} elements")
+                    if len(alt_elements) > 0:
+                        logger.info(f"  Using alternative selector: {alt_sel}")
+                        download_elements = alt_elements
+                        break
 
             # Track files before download
             existing_files = set(self.download_dir.glob("*.pdf"))
