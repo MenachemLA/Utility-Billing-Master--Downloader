@@ -21,5 +21,3 @@ httpx>=0.25.0
 # Utilities
 tenacity>=8.2.3  # For retries
 tqdm>=4.66.1  # Progress bars
-
-cd /home/user/Utility-Billing-Master--Downloader && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
