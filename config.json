@@ -18,8 +18,8 @@
       "name": "LADWP",
       "type": "selenium",
       "selectors": {
-        "username_field": "#username",
-        "password_field": "#password",
+        "username_field": "input[name='userid']",
+        "password_field": "input[name='password']",
         "login_button": "#loginButton",
         "bills_link": "a[href*='bill']",
         "download_button": ".download-pdf"
