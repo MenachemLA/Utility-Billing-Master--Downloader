@@ -7,7 +7,7 @@
       "utilities": [
         {
           "provider": "ladwp",
-          "account_number": "UPDATE_WITH_YOUR_LADWP_ACCOUNT",
+          "account_number": "8055461000",
           "login_url": "https://www.ladwp.com/ladwp/faces/ladwp/myaccount/login"
         }
       ]
