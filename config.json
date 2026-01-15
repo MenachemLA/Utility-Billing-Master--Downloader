@@ -11,6 +11,18 @@
           "login_url": "https://myaccount.ladwp.com/oamsso/login.html"
         }
       ]
+    },
+    "colby_ave": {
+      "name": "1453 COLBY AVE",
+      "address": "1453 Colby Ave Los Angeles CA 90025",
+      "appfolio_property_id": "UPDATE_WITH_YOUR_APPFOLIO_ID",
+      "utilities": [
+        {
+          "provider": "ladwp",
+          "account_number": "8055461000",
+          "login_url": "https://myaccount.ladwp.com/oamsso/login.html"
+        }
+      ]
     }
   },
   "providers": {
