@@ -201,9 +201,31 @@ class BillExtractor:
             # Track files before download
             existing_files = set(self.download_dir.glob("*.pdf"))
 
-            for element in download_elements:
+            # Use index-based iteration to avoid stale element references
+            # Re-query buttons after each download since page refreshes
+            num_bills = len(download_elements)
+            downloaded_count = 0
+
+            for i in range(num_bills):
                 try:
+                    # Re-query download buttons each iteration to avoid stale references
+                    logger.info(f"Processing bill {i+1} of {num_bills}...")
+                    download_elements = self.driver.find_elements(By.CSS_SELECTOR, selectors["download_button"])
+
+                    # Check if we still have buttons to click
+                    if i >= len(download_elements):
+                        logger.info(f"No more bills to download (found {len(download_elements)} buttons)")
+                        break
+
+                    # Get the current element
+                    element = download_elements[i]
+
+                    # Scroll element into view to ensure it's clickable
+                    self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                    time.sleep(0.5)
+
                     # Click download
+                    logger.info(f"Clicking download button {i+1}...")
                     element.click()
                     time.sleep(2)  # Wait for download to start
 
@@ -219,13 +241,16 @@ class BillExtractor:
                             new_file = list(new_files)[0]
                             downloaded_files.append(new_file)
                             existing_files = current_files
-                            logger.info(f"Downloaded: {new_file.name}")
+                            downloaded_count += 1
+                            logger.info(f"✅ Downloaded: {new_file.name}")
                             break
 
                         time.sleep(1)
+                    else:
+                        logger.warning(f"Timeout waiting for bill {i+1} to download")
 
                 except Exception as e:
-                    logger.warning(f"Failed to download bill: {str(e)}")
+                    logger.warning(f"Failed to download bill {i+1}: {str(e)}")
                     continue
 
             logger.info(f"Successfully downloaded {len(downloaded_files)} bills")
