@@ -34,7 +34,7 @@
         "password_field": "input[name='password']",
         "login_button": ".login-btn",
         "bills_link": "a[title*='Bill']",
-        "download_button": ".af_commandImageLink"
+        "download_button": ".af_commandImageLink_text"
       }
     }
   }
